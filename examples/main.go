@@ -1,30 +1,12 @@
 package main
 
 import (
-	"fmt"
 	"github.com/jianyuan/simplevm"
-	//	"strconv"
 )
 
 //func print_bits(input Instruction) {
 //	fmt.Println("Opcode:", strconv.FormatUint(uint64(input), 2))
 //}
-
-// Evaluates instruction
-func eval_instruction(vm *simplevm.VM, instr simplevm.Instruction) {
-	switch instr.Operation {
-	case simplevm.OpcodeHalt:
-		vm.IsRunning = false
-	case simplevm.OpcodeAdd:
-		vm.Registers[instr.Arg1] = vm.Registers[instr.Arg2] + vm.Registers[instr.Arg3]
-	case simplevm.OpcodeSub:
-		vm.Registers[instr.Arg1] = vm.Registers[instr.Arg2] - vm.Registers[instr.Arg3]
-	case simplevm.OpcodeLdr:
-		vm.Registers[instr.Arg1] = instr.Arg2
-	case simplevm.OpcodeDisp:
-		fmt.Printf("r%d: %d", instr.Arg1, vm.Registers[instr.Arg1])
-	}
-}
 
 func main() {
 	program := [...]simplevm.Instruction{
@@ -45,6 +27,6 @@ func main() {
 	vm := &simplevm.VM{Registers: make([]simplevm.Data, NumberOfRegisters), IsRunning: true}
 
 	for ; vm.IsRunning; vm.PC++ {
-		eval_instruction(vm, program[vm.PC])
+		program[vm.PC].ExecuteOnVM(vm)
 	}
 }

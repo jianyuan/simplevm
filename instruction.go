@@ -31,3 +31,7 @@ func DecodeInstruction(encoded InstructionCode) *Instruction {
 		Data(encoded & 0xF),
 	}
 }
+
+func (instr *Instruction) ExecuteOnVM(vm *VM) {
+	Instructions[instr.Operation].(func(*VM, *Instruction))(vm, instr)
+}
