@@ -32,7 +32,7 @@ func dispInstruction(vm *VM, instr *Instruction) {
 	fmt.Printf("r%d: %d", instr.Arg1, vm.Registers[instr.Arg1])
 }
 
-var Instructions = map[Operation]interface{}{
+var Instructions = map[Operation]func(*VM, *Instruction){
 	OpcodeHalt: haltInstruction,
 	OpcodeLdr:  ldrInstruction,
 	OpcodeAdd:  addInstruction,

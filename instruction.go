@@ -33,5 +33,5 @@ func DecodeInstruction(encoded InstructionCode) *Instruction {
 }
 
 func (instr *Instruction) ExecuteOnVM(vm *VM) {
-	Instructions[instr.Operation].(func(*VM, *Instruction))(vm, instr)
+	Instructions[instr.Operation](vm, instr)
 }
