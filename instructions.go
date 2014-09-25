@@ -10,6 +10,8 @@ const (
 	OpcodeMov
 	OpcodeAdd
 	OpcodeSub
+	OpcodeInc
+	OpcodeDec
 	OpcodeMul
 	OpcodeDiv
 	OpcodeDisp
@@ -35,6 +37,14 @@ func sub(vm *VM, instr *Instruction) {
 	vm.Registers[instr.Arg1] = vm.Registers[instr.Arg2] - vm.Registers[instr.Arg3]
 }
 
+func inc(vm *VM, instr *Instruction) {
+	vm.Registers[instr.Arg1]++
+}
+
+func dec(vm *VM, instr *Instruction) {
+	vm.Registers[instr.Arg1]--
+}
+
 func mul(vm *VM, instr *Instruction) {
 	vm.Registers[instr.Arg1] = vm.Registers[instr.Arg2] * vm.Registers[instr.Arg3]
 }
@@ -53,6 +63,8 @@ var Instructions = map[Operation]func(*VM, *Instruction){
 	OpcodeMov:  mov,
 	OpcodeAdd:  add,
 	OpcodeSub:  sub,
+	OpcodeInc:  inc,
+	OpcodeDec:  dec,
 	OpcodeMul:  mul,
 	OpcodeDiv:  div,
 	OpcodeDisp: disp,
