@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/jianyuan/simplevm"
-//	"strconv"
+	//	"strconv"
 )
 
 const (
@@ -19,18 +19,18 @@ const (
 //}
 
 // Evaluates instruction
-func eval_instruction(registers *[4]simplevm.Data, pc *uint, running *bool, instr simplevm.Instruction) {
+func eval_instruction(vm *simplevm.VM, instr simplevm.Instruction) {
 	switch instr.Operation {
 	case OPCODE_HALT:
-		*running = false
+		vm.IsRunning = false
 	case OPCODE_ADD:
-		registers[instr.Arg1] = registers[instr.Arg2] + registers[instr.Arg3]
+		vm.Registers[instr.Arg1] = vm.Registers[instr.Arg2] + vm.Registers[instr.Arg3]
 	case OPCODE_SUB:
-		registers[instr.Arg1] = registers[instr.Arg2] - registers[instr.Arg3]
+		vm.Registers[instr.Arg1] = vm.Registers[instr.Arg2] - vm.Registers[instr.Arg3]
 	case OPCODE_LDR:
-		registers[instr.Arg1] = instr.Arg2
+		vm.Registers[instr.Arg1] = instr.Arg2
 	case OPCODE_DISP:
-		fmt.Printf("r%d: %d", instr.Arg1, registers[instr.Arg1])
+		fmt.Printf("r%d: %d", instr.Arg1, vm.Registers[instr.Arg1])
 	}
 }
 
@@ -45,13 +45,14 @@ func main() {
 		{OPCODE_HALT, 0, 0, 0}, // halt
 	}
 
-//	for _, instruction := range program {
-//		print_bits(instruction)
-//	}
+	//	for _, instruction := range program {
+	//		print_bits(instruction)
+	//	}
 
-	var regs [4]simplevm.Data
-	running := true
-	for pc := uint(0); running; pc++ {
-		eval_instruction(&regs, &pc, &running, program[pc])
+	const NumberOfRegisters = 4
+	vm := &simplevm.VM{Registers: make([]simplevm.Data, NumberOfRegisters), IsRunning: true}
+
+	for ; vm.IsRunning; vm.PC++ {
+		eval_instruction(vm, program[vm.PC])
 	}
 }
