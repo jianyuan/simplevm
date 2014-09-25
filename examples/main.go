@@ -9,7 +9,7 @@ import (
 //}
 
 func main() {
-	program := [...]simplevm.Instruction{
+	program := []simplevm.Instruction{
 		{simplevm.OpcodeLoad, 0, 8, 0},  // r0 := 8
 		{simplevm.OpcodeLoad, 1, 6, 0},  // r1 := 6
 		{simplevm.OpcodeLoad, 2, 2, 0},  // r2 := 2
@@ -26,9 +26,8 @@ func main() {
 	//	}
 
 	const NumberOfRegisters = 4
-	vm := &simplevm.VM{Registers: make([]simplevm.Data, NumberOfRegisters), IsRunning: true}
-
-	for ; vm.IsRunning; vm.PC++ {
-		program[vm.PC].ExecuteOnVM(vm)
-	}
+	vm := &simplevm.VM{}
+	vm.Registers = make([]simplevm.Data, NumberOfRegisters)
+	vm.Program = program
+	vm.Execute()
 }
