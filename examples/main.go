@@ -10,9 +10,9 @@ import (
 
 func main() {
 	program := [...]simplevm.Instruction{
-		{simplevm.OpcodeLdr, 0, 5, 0},  // ldr r0 5
-		{simplevm.OpcodeLdr, 1, 6, 0},  // ldr r1 6
-		{simplevm.OpcodeLdr, 2, 2, 0},  // ldr r2 2
+		{simplevm.OpcodeLoad, 0, 5, 0},  // ldr r0 5
+		{simplevm.OpcodeLoad, 1, 6, 0},  // ldr r1 6
+		{simplevm.OpcodeLoad, 2, 2, 0},  // ldr r2 2
 		{simplevm.OpcodeAdd, 3, 0, 1},  // r3 := r0 + r1
 		{simplevm.OpcodeSub, 3, 3, 2},  // r3 := r3 - r2
 		{simplevm.OpcodeDisp, 3, 0, 0}, // disp r2
