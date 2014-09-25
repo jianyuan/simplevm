@@ -22,5 +22,6 @@ func main() {
 	vm := &simplevm.VM{}
 	vm.Registers = make([]simplevm.Data, NumberOfRegisters)
 	vm.Program = program
-	vm.Execute()
+	vm.Start()
+	vm.Run()
 }
