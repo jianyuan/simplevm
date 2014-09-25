@@ -4,6 +4,8 @@ type InstructionCode uint32
 type Operation uint8
 type Data uint8
 
+// Instruction format: [ OPCODE | ARG1 | ARG2 | ARG3 ] ; 1 byte each
+// Instruction size: 4 bytes or 32 bits
 type Instruction struct {
 	Operation Operation
 	Arg1      Data
@@ -11,7 +13,8 @@ type Instruction struct {
 	Arg3      Data
 }
 
-func (instr *Instruction) Encode() (encoded InstructionCode) {
+// Encodes instruction
+func (instr *Instruction) EncodeInstruction() (encoded InstructionCode) {
 	encoded += (InstructionCode(instr.Operation) << 12) & 0xF000
 	encoded += (InstructionCode(instr.Arg1) << 8) & 0xF00
 	encoded += (InstructionCode(instr.Arg2) << 4) & 0xF0
@@ -19,10 +22,12 @@ func (instr *Instruction) Encode() (encoded InstructionCode) {
 	return
 }
 
-func Decode(encoded InstructionCode) (instr Instruction) {
-	instr.Operation = Operation((encoded & 0xF000) >> 12)
-	instr.Arg1 = Data((encoded & 0xF00) >> 8)
-	instr.Arg2 = Data((encoded & 0xF0) >> 4)
-	instr.Arg3 = Data(encoded & 0xF)
-	return
+// Decodes instruction
+func DecodeInstruction(encoded InstructionCode) *Instruction {
+	return &Instruction{
+		Operation((encoded & 0xF000) >> 12),
+		Data((encoded & 0xF00) >> 8),
+		Data((encoded & 0xF0) >> 4),
+		Data(encoded & 0xF),
+	}
 }
