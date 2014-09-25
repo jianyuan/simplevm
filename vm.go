@@ -2,7 +2,7 @@ package simplevm
 
 type VM struct {
 	Registers []Data
-	PC        Data
+	PC        Data // TODO move PC to Registers
 	IsRunning bool
 	Program   []Instruction
 }
