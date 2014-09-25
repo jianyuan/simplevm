@@ -13,6 +13,7 @@ func main() {
 		{simplevm.OpcodeSub, 3, 3, 2},  // r3 := r3 - r2
 		{simplevm.OpcodeDiv, 3, 3, 1},  // r3 := r3 / r1
 		{simplevm.OpcodeMul, 3, 3, 0},  // r3 := r3 * r1
+		{simplevm.OpcodeInc, 3, 0, 0},  // r3 := r3 + 1
 		{simplevm.OpcodeDisp, 3, 0, 0}, // disp r3
 		{simplevm.OpcodeHalt, 0, 0, 0}, // halt
 	}

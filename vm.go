@@ -7,8 +7,12 @@ type VM struct {
 	Program   []Instruction
 }
 
+func (vm *VM) Next() {
+	vm.PC++ // TODO use Registers
+}
+
 func (vm *VM) Execute() {
-	for vm.IsRunning = true; vm.IsRunning; vm.PC++ {
+	for vm.IsRunning = true; vm.IsRunning; vm.Next() {
 		vm.Program[vm.PC].ExecuteOnVM(vm)
 	}
 }
